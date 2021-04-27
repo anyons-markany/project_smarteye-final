@@ -58,14 +58,17 @@ import RecoInsert from '../device/Modals/RecoInsert';
 import RecoUpdate from '../device/Modals/RecoUpdate.vue';
 import SideBar from '../../common/SideBar.vue';
 
+import axios from 'axios';
+
+
 export default {
     components:{
         SideBar
     },
     updated() {
-        this.getRecoInfo()
+        // this.getRecoInfo()
     },
-    mounted() {
+    created() {
         this.getRecoInfo()
     },
     data() {
@@ -88,10 +91,15 @@ export default {
             }
         },
         getRecoInfo () {
-            this.$http.get('http://localhost:3000/recoding_infos')
+            if(this.RecoInfos.length > 0) {
+                this.RecoInfos = [];
+            }
+            axios.get('http://localhost:8888/api/recoding/list')
             .then((res) => {
-                this.RecoInfos = res.data
+                this.RecoInfos = res.data.data
             })
+
+            console.log(this.RecoInfos);
         },
         delRecoInfo (checkedReco) {
             if(this.checkedReco.length == 0)

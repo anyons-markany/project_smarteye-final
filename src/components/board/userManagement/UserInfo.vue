@@ -290,9 +290,10 @@ export default {
             })
         },
         getTodos(){ // user list
-            axios.get('http://localhost:8888/api/user/list')
+            axios.get('http://localhost:8888/api/user/userlist')
             .then((res) => {
               this.todos = res.data.data
+              console.log(res)
             })
         },
         getCCTVs(){
@@ -447,9 +448,9 @@ export default {
         }
     },
     mounted(){
-        this.getUserLogin();
+        // this.getUserLogin();
         this.getTodos();
-        this.getCCTVs();
+        // this.getCCTVs();
     },
 }
 </script>

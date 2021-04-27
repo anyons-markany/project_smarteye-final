@@ -44,14 +44,9 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
-  props : {
-    recoId: {
-      type: Number,
-      required: true
-    }
-  },
   data() {
         return {
             RecoInfos: [],
@@ -61,29 +56,29 @@ export default {
         }
   },
   mounted() {
-    this.getRecoInfo()
+    // this.getRecoInfo()
   },
   methods: {
     getRecoInfo () {
-      this.$http.get('http://localhost:3000/recoding_infos/'+this.recoId)
+      axios.get('http://localhost:8888/api/recoding/list')
       .then((res) => {
-          this.name = res.data.name
-          this.ip_address = res.data.ip_address
-          this.vendor = res.data.vendor
+        this.RecoInfos = res.data.data
       })
+
+        console.log(this.RecoInfos);
     },
     updateRecoInfo(name, ip_address, vendor) {
         if(name && ip_address && vendor){
-            this.$http.post('http://localhost:3000/recoding_infos', {
+            axios.post('http://localhost:8888/api/recoding/add', {
             name: name,
             ip_address: ip_address,
             vendor: vendor
             })
             .then((res) => {
-            this.RecoInfos.push(res.data);
-            this.name = '',
-            this.ip_address = '',
-            this.vendor = '';
+            // this.RecoInfos.push(res.data);
+            // this.name = '',
+            // this.ip_address = '',
+            // this.vendor = '';
             })
         }
     },
