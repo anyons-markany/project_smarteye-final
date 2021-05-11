@@ -14,13 +14,15 @@
                 <i class="fas fa-trash-alt" aria-hidden="true"></i>
             </span>
         </div>
-
+        <!-- 추가함 -->
+        <span><input type="text" v-model="searchName" placeholder="검색할 서버이름"/></span>
         <div>
             <table class="table1">
                 <colgroup>
                 <col width="4%">
                 <col width="1%">
             </colgroup>
+            
                 <thead>
                     <tr class="table1-head-title">
                         <th></th>
@@ -31,8 +33,8 @@
                         <td><strong> 업체명 </strong></td>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="table1-body" v-for="(RecoInfo, i) in RecoInfos" :key="i" >
+                <tbody>                                                                     <!--추가-->
+                    <tr v-for="(RecoInfo, i) in RecoInfos" :key="i"  v-if="RecoInfo.name.includes(searchName)" v-bind:class="{'table1-body2' : RecoInfo.name === 'false', 'table1-body1' : RecoInfo.name != 'false'}">
                     <th></th>
                     <td><input type="checkbox" :value="RecoInfo.id" v-model="checkedReco"></td>
                     <td><span> {{ i+1 }}  </span></td>
@@ -77,6 +79,8 @@ export default {
             RecoInfos:[],
             checkedReco:[],
             recoId: '',
+            //추가
+            searchName:''
         }
     },
     methods: {
@@ -137,4 +141,19 @@ export default {
 
 
 <style scoped>
+.table1-body1{
+      overflow:scroll;
+      text-align: center;
+      background-color: #eff4f8;
+      height: 50px;
+      vertical-align: middle;
+  }
+
+.table1-body2{
+      overflow:scroll;
+      text-align: center;
+      background-color: red;
+      height: 50px;
+      vertical-align: middle;
+  }
 </style>

@@ -3,9 +3,16 @@
 </template>
 
 <script>
+//추가
+
 export default {
-  name: 'App'
+  name: 'App',
+  data(){
+
+  },
+
 }
+
 </script>
 
 <style>

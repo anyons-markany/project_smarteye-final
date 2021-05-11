@@ -6,14 +6,12 @@
             <!-- image 추가되야함 -->
           </div>
           <div class="userinfo-wrapper">
-            <span class="name">EventAdmin</span>
-            <span class="role">관리자</span>
+            <span class="name">{{id}}</span>
+            <span class="role">{{role}}</span>
           </div>
         </div>
         <div class="logout-wrapper">
-          <router-link to="/">
-            <button class="logout-btn"><span class="logout-text">로그아웃</span></button>
-          </router-link>
+            <button class="logout-btn" v-on:click="Logout()"><span class="logout-text">로그아웃</span></button>
         </div>
       </div>
       <ul class="menuWrap">
@@ -73,10 +71,16 @@
    <!-- <li id="user-li" @click.prevent="toggle3()" >사용자 관리</li> -->
 </template>
 <script>
+import {mapMutations} from 'vuex'
+
 export default {
 	name: 'Board',
   data(){
         return {
+          id : this.$store.state.idString,
+          rank : this.$store.state.rank,
+          role : this.$store.state.role,
+
           list1:false,
           list2:false,
           list3:false,
@@ -94,6 +98,15 @@ export default {
         }
     },
   methods : {
+    ...mapMutations(['setID','setRank','setRole']),
+    Logout(){
+      this.setID('')
+      this.setRank('')
+      this.setRole('')
+      console.log(this.$store);
+      this.$router.push('/')
+    },
+
     toggle1() {
       this.list1 = !this.list1;
       this.bar1= true;

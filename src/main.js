@@ -6,6 +6,9 @@ import router from './router'
 // axios
 import axios from 'axios'
 
+//vuex store
+import store from './store'
+
 //moment
 import vueMoment from 'vue-moment'
 
@@ -17,6 +20,7 @@ Vue.use(vueMoment)
 
 /* eslint-disable no-new */
 new Vue({
+  store,
   render: h => h(App)
   ,router 
 }).$mount('#app')

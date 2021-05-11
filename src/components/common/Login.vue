@@ -9,17 +9,17 @@
         </div>
 
         <div class="input-wrapper">
-          <input class="id-input" placeholder="ID"/>
-          <input type="password" class="pw-input" placeholder="PASSWORD"/>
+          <input class="id-input" placeholder="ID" v-model="id_string"/>
+          <input type="password" class="pw-input" v-model="encrypted_password" placeholder="PASSWORD"/>
         </div>
 
        
         <div class="button-wrapper">
-          <router-link to="/main">
-            <button class="loginbutton">
+          <!-- <router-link to="/main"> -->
+            <button class="loginbutton" v-on:click="getLogin(id_string,encrypted_password)">
               <span class="login-text">LOGIN</span>
             </button>
-          </router-link>
+          <!-- </router-link> -->
         </div>
 
     </div>
@@ -28,8 +28,58 @@
 </div>
 </template>
 <script>
-export default {
+import axios from 'axios';
+import {mapMutations} from 'vuex'
 
+export default {
+    components:{
+
+    },
+    data(){
+      return{
+        id_string:'',
+        encrypted_password:''
+      }
+    },
+    created(){
+      console.log(this.$store);
+    },
+    methods:{
+      ...mapMutations(['setID','setRank','setRole'])
+      ,
+          getLogin(id_string,encrypted_password){
+            axios.post('http://localhost:8888/api/state/login', {
+            //백에 있는 vo랑 맞춰주기
+            idString : id_string,
+            password : encrypted_password
+            },)
+            .then((res) => {
+              console.log(res.data.data);
+              //주석풀기
+             if(res.data.data.role ==="Admin"){
+               //슈퍼주석
+                this.setID(res.data.data.idString)
+                this.setRank(res.data.data.rank)
+                this.setRole(res.data.data.role)
+
+                console.log(this.$store);
+                // this.$router.push('main')
+              }
+              //
+              this.$router.push('main')
+            })
+        },
+        // setID(){
+        //   // console.log(idState);
+        //   // console.log(this.$store);
+        // },
+        // setRank(){
+
+        // },
+        // setRole(){
+
+        // }
+    }
 }
 </script>
 <style lang="css" scoped>
